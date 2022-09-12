@@ -1,45 +1,20 @@
-Do at least ONE of the following tasks: refactor is mandatory. Write tests is optional, will be good bonus to see it. 
-Please do not invest more than 2-4 hours on this.
-Upload your results to a Github repo, for easier sharing and reviewing.
+Code Refactoring tips and improvements
+Class => Booking Controller and Booking Repository
 
-Thank you and good luck!
+<!---Refactoring suggestions and key findings --!>
 
+1. We need to use integer enum at the database end to get the query run faster
+2. There are so much if else conditions which we can reduce by changing if with a switch statement as switch is efficient way than if else
+3. In getAll function in repository both in if and else condition of role check have code redundancy which can we use by making a common function and pass it column name and array of request data.
+4. There is no consistent variable name convention followed across the code.
+5. Three different function for sending notification with almost same code. So we can achieve that by single function.
+6. Whole controller have no try catch exception handling which should be there
+7. No form request which should be there
+8. No DB transactions is being used to avoid data loss or data creation
+9. No code usability with common functions
+10. No ACL is applied to avoid access controls.
 
-
-Code to refactor
-=================
-1) app/Http/Controllers/BookingController.php
-2) app/Repository/BookingRepository.php
-
-Code to write tests (optional)
-=====================
-3) App/Helpers/TeHelper.php method willExpireAt
-4) App/Repository/UserRepository.php, method createOrUpdate
-
-
-----------------------------
-
-What I expect in your repo:
-
-X. A readme with:   Your thoughts about the code. What makes it amazing code. Or what makes it ok code. Or what makes it terrible code. How would you have done it. Thoughts on formatting, structure, logic.. The more details that you can provide about the code (what's terrible about it or/and what is good about it) the easier for us to assess your coding style, mentality etc
-
-And 
-
-Y.  Refactor it if you feel it needs refactoring. The more love you put into it. The easier for us to asses your thoughts, code principles etc
-
-
-IMPORTANT: Make two commits. First commit with original code. Second with your refactor so we can easily trace changes. 
-
-
-NB: you do not need to set up the code on local and make the web app run. It will not run as its not a complete web app. This is purely to assess you thoughts about code, formatting, logic etc
-
-
-===== So expected output is a GitHub link with either =====
-
-1. Readme described above (point X above) + refactored code 
-OR
-2. Readme described above (point X above) + refactored core + a unit test of the code that we have sent
-
-Thank you!
+<!-- Refactoring done !-->
+I have reviewed most of the code and in Controller and Repository and added Todo on each part where i saw there need any improvement. Not all code is being refactored or reviewed but most of the code have same issues.
 
 

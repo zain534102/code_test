@@ -26,26 +26,30 @@ class BookingController extends Controller
      */
     public function __construct(BookingRepository $bookingRepository)
     {
-        $this->repository = $bookingRepository;
+        $this->repository = $bookingRepository; //TODO store bookingRepository instance in bookingRepository property for better readability
     }
 
     /**
      * @param Request $request
      * @return mixed
      */
-    public function index(Request $request)
+    public function index(Request $request) // TODO make a form request for proper validation of Request
     {
-        if($user_id = $request->get('user_id')) {
+        //TODO add a try catch to properly handle exceptions
+        if($user_id = $request->get('user_id')) { // TODO no need for extra variable simply
 
             $response = $this->repository->getUsersJobs($user_id);
 
         }
         elseif($request->__authenticatedUser->user_type == env('ADMIN_ROLE_ID') || $request->__authenticatedUser->user_type == env('SUPERADMIN_ROLE_ID'))
+            /**  TODO we should make configs for these environment variables or better to have enums. The benefit of config is that if the value in any case we can use default value.
+             * Also we can fetch user $request->user it will always return current logged in user if the route have auth middleware
+             * **/
         {
-            $response = $this->repository->getAll($request);
+            $response = $this->repository->getAll($request); //TODO best way is that we should fetch our needed keys from request by $request->only(['key']) so that user can't send any extra params in the request for dependency injection//
         }
 
-        return response($response);
+        return response($response); //TODO if we are returning as json response we can make a trait of for success and failure response and pass it with HTTP code.
     }
 
     /**
@@ -54,7 +58,8 @@ class BookingController extends Controller
      */
     public function show($id)
     {
-        $job = $this->repository->with('translatorJobRel.user')->find($id);
+        // TODO We can apply ACL model policy to restrict user to see only his jobs
+        $job = $this->repository->with('translatorJobRel.user')->find($id); //TODO again no try catch condition here to avoid any case of exception handling. Also we should use findORFail method
 
         return response($job);
     }
@@ -63,9 +68,10 @@ class BookingController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function store(Request $request)
+    public function store(Request $request) //TODO no form request to add security layer so user can enter and pass any data
     {
-        $data = $request->all();
+        // TODO We can apply ACL model policy to restrict user to see only his jobs
+        $data = $request->all(); //TODO we should get model fillable value only by this $request->get(app(Model::class)->getFillable());
 
         $response = $this->repository->store($request->__authenticatedUser, $data);
 
@@ -78,10 +84,11 @@ class BookingController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function update($id, Request $request)
+    public function update($id, Request $request) //TODO no form request for data validations
     {
-        $data = $request->all();
-        $cuser = $request->__authenticatedUser;
+        // TODO We can apply ACL model policy to restrict user to see only his jobs
+        $data = $request->all(); //TODO getting all request without filtering necessary data can be risky in case of dependency injection
+        $cuser = $request->__authenticatedUser; //TODO we don't need extra variable here
         $response = $this->repository->updateJob($id, array_except($data, ['_token', 'submit']), $cuser);
 
         return response($response);
@@ -91,9 +98,9 @@ class BookingController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function immediateJobEmail(Request $request)
+    public function immediateJobEmail(Request $request) //TODO no form request for data validations
     {
-        $adminSenderEmail = config('app.adminemail');
+
         $data = $request->all();
 
         $response = $this->repository->storeJobEmail($data);
