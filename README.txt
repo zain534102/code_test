@@ -13,8 +13,14 @@ Class => Booking Controller and Booking Repository
 8. No DB transactions is being used to avoid data loss or data creation
 9. No code usability with common functions
 10. No ACL is applied to avoid access controls.
+11. instead of bool values string values have been used for comparison
 
 <!-- Refactoring done !-->
-I have reviewed most of the code and in Controller and Repository and added Todo on each part where i saw there need any improvement. Not all code is being refactored or reviewed but most of the code have same issues.
+I have reviewed most of the code and in Controller and Repository and added Todo on each part where I saw there need any improvement. Not all code is being refactored or reviewed but most of the code have same issues.
 
 
+<!-- Test cases !-->
+Test cases have been also added inside test director
+For TsHelper test case I only added test case for one case which is time difference less than <=90
+
+Test case for create or update is added with both create and update.
